@@ -7,8 +7,12 @@ dnf -y update
 
 # Deactivating Swap and Firewall
 
-swapoff -a
+sudo sed -i '/ swap /s/^/#/' /etc/fstab
+mount -a # && reboot
+
 systemctl stop firewalld
+systemctl disable firewalld
+systemctl mask --now firewalld
 
 # Installing Container Runtime: ContainerD
 
@@ -19,12 +23,12 @@ sed -i "s/SystemdCgroup = false/SystemdCgroup = true/g"  /etc/containerd/config.
 sed -i "s/disabled_plugin/enabled_plugin/g"  /etc/containerd/config.toml
 systemctl enable --now containerd
 
-# Lowering Secutiry Policies for Setup
+# Lowering Security Policies for Setup
 
 sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
-# Installing Kubelet, Kubeadm and Kubectl 
+# Installing Kubelet, Kubeadm and Kubectl
 
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -45,7 +49,9 @@ modprobe br_netfilter
 sysctl -p /etc/sysctl.conf
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
-# Init the kubeadm
+# Only in the Control Plane (Master):
 
-kubeadm init
-export KUBECONFIG=/etc/kubernetes/admin.conf
+# kubeadm init phase certs ca
+# kubeadm init phase kubeconfig admin
+# kubeadm init
+# export KUBECONFIG=/etc/kubernetes/admin.conf

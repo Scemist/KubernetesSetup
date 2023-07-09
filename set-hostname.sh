@@ -5,7 +5,7 @@
 
 HOSTNAME=$1
 
-hostnamectl set-hostname $1
+hostnamectl set-hostname ${HOSTNAME}
 
 echo 127.0.0.1  ${HOSTNAME} >> /etc/hosts
 echo ::1  ${HOSTNAME} >> /etc/hosts
