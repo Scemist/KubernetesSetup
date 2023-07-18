@@ -9,6 +9,7 @@ dnf -y update
 
 sudo sed -i '/ swap /s/^/#/' /etc/fstab
 mount -a # && reboot
+swapoff -a
 
 systemctl stop firewalld
 systemctl disable firewalld
@@ -55,3 +56,8 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 # kubeadm init phase kubeconfig admin
 # kubeadm init
 # export KUBECONFIG=/etc/kubernetes/admin.conf
+
+# kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+# kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+
+# watch kubectl get pods -n kube-system
