@@ -57,7 +57,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 # kubeadm init
 # export KUBECONFIG=/etc/kubernetes/admin.conf
 
-# kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
-# kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
+# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/custom-resources.yaml
 
 # watch kubectl get pods -n kube-system
